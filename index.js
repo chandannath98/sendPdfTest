@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT ||  3000;
 
 app.use(bodyParser.json());
 
@@ -65,9 +65,6 @@ app.post('/createToken', (req, res) => {
   fileStream.pipe(res);
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 
 // POST endpoint to download PDF based on 'id' parameter
 app.post('/downloadPdf', verifyToken, (req, res) => {
