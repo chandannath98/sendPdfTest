@@ -48,7 +48,7 @@ app.post('/createToken', (req, res) => {
     }
   });
 
-  app.get('/downloadPdf/:id', verifyToken, (req, res) => {
+  app.get('/downloadNewPdf/:id', verifyToken, (req, res) => {
   const id = parseInt(req.params.id);
     console.log("------",id)
 
