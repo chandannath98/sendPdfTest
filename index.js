@@ -48,7 +48,26 @@ app.post('/createToken', (req, res) => {
     }
   });
 
-  
+  app.get('/downloadPdf/:id', verifyToken, (req, res) => {
+  const id = parseInt(req.params.id);
+    console.log("------",id)
+
+  if (!pdfFiles[id]) {
+    return res.status(404).json({ message: 'PDF not found' });
+  }
+
+  // Set the response headers for PDF download
+  res.setHeader('Content-Disposition', `attachment; filename="downloaded.pdf"`);
+  res.setHeader('Content-Type', 'application/pdf');
+
+  // Stream the PDF file to the response
+  const fileStream = fs.createReadStream(pdfFiles[id]);
+  fileStream.pipe(res);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 // POST endpoint to download PDF based on 'id' parameter
 app.post('/downloadPdf', verifyToken, (req, res) => {
